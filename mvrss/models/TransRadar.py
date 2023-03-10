@@ -133,7 +133,7 @@ class TransRad(nn.Module):
 
         self.pre_axial1 = ConvBlock(128*3,(128*3)//2,1,0,1)
         self.pre_axial2 = ConvBlock((128*3)//2,channels,1,0,1)
-        self.axial1 = AxialImageTransformer(dim=channels, depth = depth, reversible = True, deform_k = deform_k)
+        self.axial1 = ADA(dim=channels, depth = depth, reversible = True, deform_k = deform_k)
         # Decoding
         self.rd_single_conv_block2_1x1 = ConvBlock(in_ch=channels, out_ch=128, k_size=1, pad=0, dil=1)
         self.ra_single_conv_block2_1x1 = ConvBlock(in_ch=channels, out_ch=128, k_size=1, pad=0, dil=1)
