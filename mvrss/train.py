@@ -42,7 +42,7 @@ def main():
     if cfg['model'] == 'mvnet':
         net = MVNet(n_classes=data['cfg']['nb_classes'],
                     n_frames=data['cfg']['nb_input_channels'])
-    elif cfg['model'] == 'axial_64_2d_deform':
+    elif cfg['model'] == 'TransRadar':
         net = TransRad(n_classes=data['cfg']['nb_classes'],
                       n_frames=data['cfg']['nb_input_channels'],
                       depth = data['cfg']['depth'],
