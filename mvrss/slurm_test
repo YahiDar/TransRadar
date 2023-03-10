@@ -12,12 +12,12 @@
 
 hostname
 
-cd /home/yahia.dalbah/carrada/mvrss/utils/
-python set_paths.py --carrada /l/users/yahia.dalbah/ --logs /home/yahia.dalbah/carrada/mvrss/carrada_logs
+cd /home/yahia.dalbah/TransRadar/mvrss/utils/
+python set_paths.py --carrada /l/users/yahia.dalbah/ --logs /home/yahia.dalbah/TransRadar/mvrss/carrada_logs
 
-cd /home/yahia.dalbah/carrada/mvrss/ 
+cd /home/yahia.dalbah/TransRadar/mvrss/ 
 
-python -u test.py --cfg /home/yahia.dalbah/TransRadar_Weights/config.json
+python -u test.py --cfg /home/yahia.dalbah/TransRadar/mvrss/carrada_logs/carrada/TransRadar/TransRadar_0/config.json
 
 EOL
 
