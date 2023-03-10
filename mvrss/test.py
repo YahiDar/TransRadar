@@ -35,11 +35,9 @@ def test_model():
         model = TransRad(n_classes = cfg['nb_classes'],
                       n_frames = cfg['nb_input_channels'],
                       depth = cfg['depth'],
-                      heads = cfg['heads'],
                       channels = cfg['channels'],
-                      dim_heads = cfg['dim_heads'],
                       deform_k = cfg['deform_k'],
-                      conv = cfg['conv'])
+                      )
     else:
         model = TMVANet(n_classes=cfg['nb_classes'],
                       n_frames=cfg['nb_input_channels'])
