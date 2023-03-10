@@ -159,7 +159,7 @@ def normalize(data, signal_type, norm_type='local'):
 
 
 
-def define_loss(signal_type, custom_loss, device, delta = 0.6, unified_weight = 0.5, loss_weight = 1., dice_weight = 10., coherence_weight = 5.):
+def define_loss(signal_type, custom_loss, device, delta = 0.6,  loss_weight = 1., dice_weight = 10., coherence_weight = 5.):
     """
     Method to define the loss to use during training
 
@@ -190,7 +190,7 @@ def define_loss(signal_type, custom_loss, device, delta = 0.6, unified_weight = 
         loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
     elif custom_loss == 'CAObjectLoss':
         weights = get_class_weights(signal_type)
-        ce_loss = CALoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
+        ce_loss = CALoss( global_weight=loss_weight, delta= delta)
         loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), MVLoss(global_weight=coherence_weight)]
     
 
