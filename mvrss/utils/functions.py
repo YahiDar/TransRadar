@@ -8,25 +8,9 @@ from PIL import Image
 from mvrss.utils import MVRSS_HOME
 from mvrss.losses.soft_dice import SoftDiceLoss
 from mvrss.losses.coherence import CoherenceLoss
-from mvrss.losses.coherence_clip import ClipCoherenceLoss
-from mvrss.losses.coherence_clip2 import Clip2CoherenceLoss
-from mvrss.losses.huber_coherence import HuberCoherenceLoss
-from mvrss.losses.smooth_coherence import SmoothCoherenceLoss
-from mvrss.losses.coherence_avg import AvgCoherenceLoss
-from mvrss.losses.coherence_BT import BTCoherenceLoss
-from mvrss.losses.KLcoherence import KLCoherenceLoss
-from mvrss.losses.cos_coherence import CosCoherenceLoss
+from mvrss.losses.MVLoss import MVLoss
 from mvrss.loaders.dataloaders import Rescale, Flip, HFlip, VFlip
-from mvrss.utils.unified_loss import AsymmetricUnifiedFocalLoss, SymmetricUnifiedFocalLoss
-from mvrss.utils.unified_loss_nodelta import nodeltaSymmetricUnifiedFocalLoss
-from mvrss.utils.analog_unified_loss import AnalogAsymmetricUnifiedFocalLoss, AnalogSymmetricUnifiedFocalLoss
-from mvrss.utils.asymmetric_tversky import AsymmetricFocalTverskyLoss
-from mvrss.utils.mix_unified import MixAsymmetricUnifiedFocalLoss
-from mvrss.utils.asymmetric_focal import AsymmetricFocalLoss
-from mvrss.utils.combo_loss import ComboLoss
-from mvrss.utils.mc_unified_loss import MCSymmetricUnifiedFocalLoss
-from mvrss.utils.lovasz_loss import LovaszLoss
-
+from mvrss.utils.unified_loss import CALoss
 
 
 
@@ -200,106 +184,14 @@ def define_loss(signal_type, custom_loss, device, delta = 0.6, unified_weight = 
         weights = get_class_weights(signal_type)
         ce_loss = nn.CrossEntropyLoss(weight=weights.to(device).float())
         loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight)]
-    elif custom_loss == 'sym_nocoherence':
-        weights = get_class_weights(signal_type)
-        ce_loss = SymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight)]
     elif custom_loss == 'wce_w10sdice_w5col':
         weights = get_class_weights(signal_type)
         ce_loss = nn.CrossEntropyLoss(weight=weights.to(device).float())
         loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'unified_combo':
+    elif custom_loss == 'CAObjectLoss':
         weights = get_class_weights(signal_type)
-        ce_loss = AsymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight)
-        loss = [ce_loss, ComboLoss(), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'lovasz':
-        weights = get_class_weights(signal_type)
-        ce_loss = LovaszLoss(global_weight=loss_weight)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'mc_unifiedloss':
-        weights = get_class_weights(signal_type)
-        ce_loss = MCSymmetricUnifiedFocalLoss(weight= unified_weight, weights = weights.to(device))
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'combo_loss':
-        weights = get_class_weights(signal_type)
-        ce_loss = ComboLoss(global_weight=loss_weight)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'unified_nodice':
-        weights = get_class_weights(signal_type)
-        ce_loss = AsymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'asymmetric_focal':
-        weights = get_class_weights(signal_type)
-        ce_loss = AsymmetricFocalLoss(global_weight = loss_weight)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'asymmetric_tversky':
-        weights = get_class_weights(signal_type)
-        ce_loss = AsymmetricFocalTverskyLoss(global_weight = loss_weight)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'klcoherence':
-        weights = get_class_weights(signal_type)
-        ce_loss = AsymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), KLCoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'cos_coherence':
-        weights = get_class_weights(signal_type)
-        ce_loss = SymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CosCoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'mix_unified':
-        weights = get_class_weights(signal_type)
-        ce_loss = MixAsymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == '2rdra_sym_unified_loss':
-        weights = get_class_weights(signal_type)
-        ce_loss = SymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == '2rard_sym_unified_loss':
-        weights = get_class_weights(signal_type)
-        ce_loss = SymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'huber_coherence':
-        weights = get_class_weights(signal_type)
-        ce_loss = SymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), HuberCoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'smooth_coherence':
-        weights = get_class_weights(signal_type)
-        ce_loss = SymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), SmoothCoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'clip_coherence':
-        weights = get_class_weights(signal_type)
-        ce_loss = SymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), ClipCoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'clip2_coherence':
-        weights = get_class_weights(signal_type)
-        ce_loss = SymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), Clip2CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'avg_coherence':
-        weights = get_class_weights(signal_type)
-        ce_loss = SymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), AvgCoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'bt_coherence':
-        weights = get_class_weights(signal_type)
-        ce_loss = SymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), BTCoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'analog_unified_loss':
-        weights = get_class_weights(signal_type)
-        ce_loss = AnalogAsymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'analog_sym_unified_loss':
-        weights = get_class_weights(signal_type)
-        ce_loss = AnalogSymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'unified_loss':
-        weights = get_class_weights(signal_type)
-        ce_loss = AsymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), CoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'sym_unified_loss':
-        weights = get_class_weights(signal_type)
-        ce_loss = SymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), HuberCoherenceLoss(global_weight=coherence_weight)]
-    elif custom_loss == 'no_delta_sym_unified_loss':
-        weights = get_class_weights(signal_type)
-        ce_loss = nodeltaSymmetricUnifiedFocalLoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
-        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), HuberCoherenceLoss(global_weight=coherence_weight)]
+        ce_loss = CALoss(weight= unified_weight, global_weight=loss_weight, delta= delta)
+        loss = [ce_loss, SoftDiceLoss(global_weight=dice_weight), MVLoss(global_weight=coherence_weight)]
     
 
     else:
