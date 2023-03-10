@@ -26,5 +26,6 @@
  "custom_loss": "CAObjectLoss",
  "transformations": "hflip,vflip",
  "norm_type": "tvt",
- "shuffle": true
+ "shuffle": true,
+ "comments": "TransRadar model."
 }

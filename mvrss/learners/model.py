@@ -78,7 +78,7 @@ class Model(nn.Module):
             Default: False
         """
 
-        self.writer.add_text('Comments', self.comments)
+        # self.writer.add_text('Comments', self.comments)
         train_loader, val_loader, test_loader = self.dataloaders
         transformations = get_transformations(self.transform_names,
                                               sizes=(self.w_size, self.h_size))
