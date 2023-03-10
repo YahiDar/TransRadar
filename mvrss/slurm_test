@@ -17,7 +17,7 @@ python set_paths.py --carrada /l/users/yahia.dalbah/ --logs /home/yahia.dalbah/c
 
 cd /home/yahia.dalbah/carrada/mvrss/ 
 
-python -u test.py --cfg /home/yahia.dalbah/carrada/mvrss/carrada_logs/carrada/unet2/unet2_1/config.json
+python -u test.py --cfg /home/yahia.dalbah/TransRadar_Weights/config.json
 
 EOL
 

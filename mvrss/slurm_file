@@ -31,7 +31,7 @@ fi
 
 # cd /home/yahia.dalbah/carrada/mvrss/utils/
 # python set_paths.py --carrada /l/users/yahia.dalbah/ --logs /home/yahia.dalbah/carrada/mvrss/carrada_logs
-cd /home/yahia.dalbah/carrada/mvrss/ 
+cd /home/yahia.dalbah/TransRadar/mvrss/ 
 python -u train.py --cfg config_files/axial_2d_deformable_conv_hubercoh.json --cp_store /l/users/yahia.dalbah/carrada_logs_dummy
 
 EOL
