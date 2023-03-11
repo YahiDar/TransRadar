@@ -5,7 +5,7 @@ cd CARRADA
 tar -xvf Carrada.tar.gz
 
 
-cd $ROOT/carrada/mvrss/utils/
+cd $ROOT/TransRadar/mvrss/utils/
 python set_paths.py --carrada $ROOT --logs -dir_to_output-
-cd $ROOT/carrada/mvrss/ 
+cd $ROOT/TransRadar/mvrss/ 
 python -u train.py --cfg ./config_files/TransRadar.json --cp_store -dir_to_checkpoint_store-
