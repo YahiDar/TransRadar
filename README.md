@@ -35,8 +35,8 @@ $ git clone https://github.com/YahiDar/TransRadar.git
 1. Create a conda environment using:
 
 ```bash
-$ cd MVRSS
-$ conda env create -n TransRadar --file env.yml
+$ cd $ROOT/TransRadar/
+$ conda env create -f env.yml
 conda activate TransRadar
 pip install -e .
 ```
