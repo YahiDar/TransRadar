@@ -10,7 +10,7 @@ from mvrss.losses.soft_dice import SoftDiceLoss
 from mvrss.losses.coherence import CoherenceLoss
 from mvrss.losses.MVLoss import MVLoss
 from mvrss.loaders.dataloaders import Rescale, Flip, HFlip, VFlip
-from mvrss.utils.unified_loss import CALoss
+from mvrss.utils.ClassAgnosticLoss import CALoss
 
 
 

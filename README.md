@@ -73,4 +73,9 @@ You can also use the ```test_transrad.sh``` file after editing directories.
 ## Acknowledgements
 
 We mention again that this code heavily borrows from the [veloai repository](https://github.com/valeoai/MVRSS). 
+
 The loss function implementation borrows from the [Unified Focal Loss code](https://github.com/mlyg/unified-focal-loss).
+
+The ADA code is heavily borrowed from the [Axial Attention](https://github.com/lucidrains/axial-attention) code and edited for our purpose.
+
+

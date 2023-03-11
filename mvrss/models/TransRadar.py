@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
-from mvrss.models.adaptive_directional_attention import ADA
 import torch.nn.functional as F
+from mvrss.models.adaptive_directional_attention import ADA
 
 
 class DoubleConvBlock(nn.Module):
@@ -63,7 +63,8 @@ class ConvBlock(nn.Module):
 
 class EncodingBranch(nn.Module):
     """
-    Encoding branch for a single radar view
+    Encoding branch for a single radar view.
+    Same implementation as the original MVRSS paper.
 
     PARAMETERS
     ----------
@@ -112,17 +113,6 @@ class EncodingBranch(nn.Module):
 
 
 class TransRad(nn.Module):
-    """ 
-    Temporal Multi-View with ASPP Network (TMVA-Net)
-
-    PARAMETERS
-    ----------
-    n_classes: int
-        Number of classes used for the semantic segmentation task
-    n_frames: int
-        Total numer of frames used as a sequence
-    """
-
     def __init__(self, n_classes, n_frames, deform_k = [3, 3, 3, 3, 3, 3, 3, 3], depth = 8, channels = 64):
         super().__init__()
         self.n_classes = n_classes
@@ -131,9 +121,9 @@ class TransRad(nn.Module):
         self.ra_encoding_branch = EncodingBranch('range_angle', k_size = (n_frames//2 + 1))
         self.ad_encoding_branch = EncodingBranch('angle_doppler', k_size = (n_frames//2 + 1))
 
-        self.pre_axial1 = ConvBlock(128*3,(128*3)//2,1,0,1)
-        self.pre_axial2 = ConvBlock((128*3)//2,channels,1,0,1)
-        self.axial1 = ADA(dim=channels, depth = depth, deform_k = deform_k)
+        self.pre_trans1 = ConvBlock(128*3,(128*3)//2,1,0,1)
+        self.pre_trans2 = ConvBlock((128*3)//2,channels,1,0,1)
+        self.ADA = ADA(dim=channels, depth = depth, deform_k = deform_k)
         # Decoding
         self.rd_single_conv_block2_1x1 = ConvBlock(in_ch=channels, out_ch=128, k_size=1, pad=0, dil=1)
         self.ra_single_conv_block2_1x1 = ConvBlock(in_ch=channels, out_ch=128, k_size=1, pad=0, dil=1)
@@ -159,56 +149,30 @@ class TransRad(nn.Module):
 
 
     def forward(self, x_rd, x_ra, x_ad):
-        # Backbone
-        #print('x_rd is:', x_rd.shape)
-        #print('x_ra is:', x_ra.shape)
-        #print('x_ad is:', x_ad.shape)
         ra_latent = self.ra_encoding_branch(x_ra)
         rd_latent = self.rd_encoding_branch(x_rd)
         ad_latent = self.ad_encoding_branch(x_ad)
-        #print('rafeatures,ra latent is:', ra_features.shape, ra_latent.shape)
-        #print('rafeatures,ra latent is:', rd_features.shape, rd_latent.shape)
-        #print('rafeatures,ra latent is:', ad_features.shape, ad_latent.shape)
 
-
-        # Latent Space
-        # Features join either the RD or the RA branch
 
         x3 = torch.cat((rd_latent, ra_latent, ad_latent), 1)
-        x3 = self.pre_axial2(self.pre_axial1(x3))
-        x3 = self.axial1(x3)
+        x3 = self.pre_trans2(self.pre_trans1(x3))
+        x3 = self.ADA(x3)
+
+
         x4_rd = self.rd_single_conv_block2_1x1(x3)
         x4_ra = self.ra_single_conv_block2_1x1(x3)
-        # print('x3 is:', x3.shape)
-        # print('x3_rd is:', x3_rd.shape)
-        # print('x3_ra is:', x3_ra.shape)
 
-
-
-        # Parallel decoding branches with upconvs
         x5_rd = self.rd_upconv1(x4_rd)
         x5_ra = self.ra_upconv1(x4_ra)
         x6_rd = self.rd_double_conv_block1(x5_rd)
         x6_ra = self.ra_double_conv_block1(x5_ra)
-        #print('x5_rd is:', x5_rd.shape)
-        #print('x5_ra is:', x5_ra.shape)        
-        #print('x6_rd is:', x6_rd.shape)
-        #print('x6_ra is:', x6_ra.shape)
 
         x7_rd = self.rd_upconv2(x6_rd)
         x7_ra = self.ra_upconv2(x6_ra)
         x8_rd = self.rd_double_conv_block2(x7_rd)
         x8_ra = self.ra_double_conv_block2(x7_ra)
-        #print('x7_rd is:', x7_rd.shape)
-        #print('x7_ra is:', x7_ra.shape)        
-        #print('x8_rd is:', x8_rd.shape)
-        #print('x8_ra is:', x8_ra.shape)
 
-        # Final 1D convolutions
+
         x9_rd = self.rd_final(x8_rd)
         x9_ra = self.ra_final(x8_ra)    
-        #print('x9_rd  is:', x9_rd.shape)
-        #print('x9_ra is:', x9_ra.shape)
-            
-        #print('end')
         return x9_rd, x9_ra
