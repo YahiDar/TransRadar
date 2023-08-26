@@ -1,23 +1,11 @@
 # TransRadar
 
 
-This repository heavily borrows from [Multi-View Radar Semantic Segmentation](https://github.com/valeoai/MVRSS)
+This repository borrows from [Multi-View Radar Semantic Segmentation](https://github.com/valeoai/MVRSS)
 
 If you find this work helpful in your research, please do cite our work through:
 
 ```
-```
-
-and the original work from Ouaknine, A. through:
-```
-@InProceedings{Ouaknine_2021_ICCV,
-	       author = {Ouaknine, Arthur and Newson, Alasdair and P\'erez, Patrick and Tupin, Florence and Rebut, Julien},
-	       title = {Multi-View Radar Semantic Segmentation},
-	       booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
-	       month = {October},
-	       year = {2021},
-	       pages = {15671-15680}
-	       }
 ```
 
 
