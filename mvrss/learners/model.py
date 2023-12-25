@@ -98,8 +98,8 @@ class Model(nn.Module):
             scheduler = ExponentialLR(optimizer, gamma=0.9)
         self.net.to(self.device)
         
-        test = torch.randn(6,1,5,256,256).cuda()
-        test2 = torch.randn(6,1,5,256,64).cuda()
+        test = torch.randn(6,1,5,256,256).to(self.cfg['device'])
+        test2 = torch.randn(6,1,5,256,64).to(self.cfg['device'])
 
         macs, params = profile(self.net, inputs =(test2,test,test2,))
 

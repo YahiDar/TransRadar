@@ -48,19 +48,20 @@ class CLLoss(nn.Module):
     
     
 class CALoss(nn.Module):
-    def __init__(self,  delta=0.6, global_weight = 1.):
+    def __init__(self,  delta=0.6, global_weight = 1., device = 'cuda'):
         super(CALoss, self).__init__()
         self.delta = delta
         self.global_weight = global_weight
+        self.device = device
 
     def forward(self, y_pred, y_true):
         y_pred = one_hot(torch.clamp(torch.argmax(y_pred,dim=1),min=0,max=1)).permute(0,-1,1,2)
         y_true = one_hot(torch.clamp(y_true,min=0,max=1)).permute(0,-1,1,2)
 
         if y_true.shape[1] == 1:
-            y_true = torch.cat((y_true,torch.zeros(y_true.shape).cuda()), dim=1)
+            y_true = torch.cat((y_true,torch.zeros(y_true.shape).to(self.device)), dim=1)
         if y_pred.shape[1] == 1:
-            y_pred = torch.cat((y_pred,torch.zeros(y_pred.shape).cuda()),dim=1)
+            y_pred = torch.cat((y_pred,torch.zeros(y_pred.shape).to(self.device)),dim=1)
 
         ocloss = OCLoss(delta=self.delta)(y_pred, y_true)
         cllos = CLLoss()(y_pred, y_true)

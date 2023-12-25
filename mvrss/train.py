@@ -15,12 +15,18 @@ def main():
                         default='config.json')
     parser.add_argument('--cp_store', type=str, help = 'path to store checkpoints')
     parser.add_argument('--resume_from', type=str, default = None, help='path to checkpoints')
+    parser.add_argument('--unit_test', action='store_true', help='Make sure the training module runs on one sample with one batch size.')
     args = parser.parse_args()
     cfg_path = args.cfg
     
     with open(cfg_path, 'r') as fp:
         cfg = json.load(fp)
 
+    if args.unit_test:
+        cfg['batch_size'] = 1
+        if cfg['model'] == 'TransRadar':
+            cfg['depth'] = 1
+    
     if args.resume_from is not None and os.path.exists(args.resume_from):
         cp_path = args.resume_from
         store_checkpoints = ''
@@ -57,7 +63,6 @@ def main():
         print('loading checkpoint')
     else:
         checkpoint = None
-
 
     print('Number of trainable parameters in the model: %s' % str(count_params(net)))
     print(net)

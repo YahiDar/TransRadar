@@ -22,7 +22,7 @@
  "torch_seed": 40,
  "numpy_seed": 40,
  "version": 0,
- "device": "cuda",
+ "device": "cpu",
  "custom_loss": "CAObjectLoss",
  "transformations": "hflip,vflip",
  "norm_type": "tvt",

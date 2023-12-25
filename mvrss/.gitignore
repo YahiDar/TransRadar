@@ -8,3 +8,13 @@ __pycache__
 *.pyc
 *.cpython*
 .cpython
+
+*.ini
+
+mvrss/config_files/config.ini
+
+events*
+
+config_files/config.ini
+
+./mvrss/out_logs/*
