@@ -17,4 +17,5 @@ events*
 
 config_files/config.ini
 
-./mvrss/out_logs/*
+/home/yahia/main_repos/TransRadar-Hold-/mvrss.egg-info
+/home/yahia/main_repos/TransRadar-Hold-/mvrss/out_logs

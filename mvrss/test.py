@@ -21,7 +21,7 @@ def test_model():
     cfg_path = args.cfg
     with open(cfg_path, 'r') as fp:
         cfg = json.load(fp)
-
+    
     paths = Paths().get()
     exp_name = cfg['name_exp'] + '_' + str(cfg['version'])
     path = paths['logs'] / cfg['dataset'] / cfg['model'] / exp_name
@@ -44,9 +44,9 @@ def test_model():
 
     
     print('Number of trainable parameters in the model: %s' % str(count_params(model)))        
-    model.cuda()
-    test = torch.randn(6,1,5,256,256).cuda()
-    test2 = torch.randn(6,1,5,256,64).cuda()
+    model.to(cfg['device'])
+    test = torch.randn(6,1,5,256,256).to(cfg['device'])
+    test2 = torch.randn(6,1,5,256,64).to(cfg['device'])
 
     macs, params = profile(model, inputs =(test2,test,test2,))
 

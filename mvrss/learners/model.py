@@ -160,6 +160,9 @@ class Model(nn.Module):
         for epoch in range((self.nb_epochs-epoch_start)):
             print('model name is:', self.cfg['unique'])
             print('training:', self.net.training)
+            '''
+            This code is for gradual coherence testing. feel free to play with it; but it did not perform adequately.
+            '''
             # if 'gradual_coherence' in self.cfg:
             #     if self.cfg['gradual_coherence'][2] == 1:
             #         if (epoch+epoch_start) % self.cfg['gradual_coherence'][0] == 0:
