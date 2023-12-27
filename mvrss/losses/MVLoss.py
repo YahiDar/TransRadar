@@ -16,7 +16,7 @@ class MVLoss(nn.Module):
         super(MVLoss, self).__init__()
         self.global_weight = global_weight
         self.MVLoss = torch.nn.HuberLoss(reduction ='mean')
-
+        #self.MVLoss = nn.MSELoss() #instead?
     def forward(self, rd_input: torch.Tensor,
                 ra_input: torch.Tensor) -> torch.Tensor:
         """Forward pass to compute the loss between the two predicted view masks"""
