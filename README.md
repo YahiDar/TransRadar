@@ -1,6 +1,3 @@
-
-This repository heavily borrows from [Multi-View Radar Semantic Segmentation](https://github.com/valeoai/MVRSS)
-
 If you find this work helpful in your research, please do cite our work through:
 
 ```
@@ -25,6 +22,7 @@ and the original work from Ouaknine, A. through:
 	       pages = {15671-15680}
 	       }
 ```
+This repository heavily borrows from [Multi-View Radar Semantic Segmentation](https://github.com/valeoai/MVRSS)
 
 The CARRADA dataset is available on Valeo.ai's github: [https://github.com/valeoai/carrada_dataset](https://github.com/valeoai/carrada_dataset).
 
