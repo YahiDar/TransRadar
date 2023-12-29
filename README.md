@@ -93,7 +93,7 @@ The weights we provide are slightly different than what we report in the paper, 
 
 ## Acknowledgements
 
-We mention again that this code heavily borrows from the [veloai repository](https://github.com/valeoai/MVRSS). 
+We mention again that this code heavily borrows from the [Valeoai repository](https://github.com/valeoai/MVRSS). 
 
 The loss function implementation borrows from the [Unified Focal Loss code](https://github.com/mlyg/unified-focal-loss).
 
