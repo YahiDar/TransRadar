@@ -14,7 +14,7 @@ def main():
     parser.add_argument('--cfg', help='Path to config file.',
                         default='config.json')
     parser.add_argument('--cp_store', type=str, help = 'path to store checkpoints')
-    parser.add_argument('--resume_from', type=str, default = None, help='path to checkpoints')
+    parser.add_argument('--resume_from', type=str, default = None, help='path to checkpoints. To use this, you have to use the checkpoints created by the cp_store argument, and not the one created automatically by the model.py trainer file')
     parser.add_argument('--unit_test', action='store_true', help='Make sure the training module runs on one sample with one batch size.')
     args = parser.parse_args()
     cfg_path = args.cfg
@@ -30,6 +30,7 @@ def main():
     if args.resume_from is not None and os.path.exists(args.resume_from):
         cp_path = args.resume_from
         store_checkpoints = ''
+        #To use this, you have to use the checkpoints created by the cp_store argument, and not the one created automatically by the model.py trainer file
         for v in cp_path.split('/')[1:-1]:
             store_checkpoints = store_checkpoints + '/' + v
         print('storing checkpoints at: ', store_checkpoints)

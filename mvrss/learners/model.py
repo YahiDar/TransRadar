@@ -326,8 +326,6 @@ class Model(nn.Module):
                 #original code used val_prec, i am using miou since we switched the loss to miou based loss. 
                 if val_metrics['range_doppler']['miou'] > (best_val_miou):
                     best_val_miou = val_metrics['range_doppler']['miou']
-                    print('This epoch has higher validation score ... testing ')
-
                     
                     start_time = time.time()
                     test_metrics = self.tester.predict(self.net, test_loader,
@@ -353,8 +351,6 @@ class Model(nn.Module):
 
                     epoch_of_best = (epoch+epoch_start+1)
                     best_test_miou = test_metrics['range_doppler']['miou']
-                    if test_metrics['range_doppler']['miou'] > best_test_miou:
-                        print('This epoch has higher testing score ... ')
                     self.results['rd_train_loss'] = rd_train_loss.item()
                     self.results['ra_train_loss'] = ra_train_loss.item()
                     self.results['train_loss'] = train_loss.item()
@@ -376,11 +372,11 @@ class Model(nn.Module):
                 }
                     save_model_path = '%s/max_epoch_%02d_final.pt' % (self.store_checkpoints, epoch+epoch_start + 1)
                     torch.save(status_dict, save_model_path)
-                    print('saving this epoch at', save_model_path)
+                    print('saving this checkpoint at', save_model_path)
 
                     self.net.train()
                 else:
-                    print('Not validating ... best valid so far is: ', best_val_miou, 'At epoch', epoch_of_best)
+                    print('Skip testing ...')
                     self.net.train()  
 
         self.writer.close()
