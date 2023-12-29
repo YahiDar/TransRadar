@@ -1,7 +1,0 @@
-LICENSE
-README.md
-setup.py
-mvrss.egg-info/PKG-INFO
-mvrss.egg-info/SOURCES.txt
-mvrss.egg-info/dependency_links.txt
-mvrss.egg-info/top_level.txt
