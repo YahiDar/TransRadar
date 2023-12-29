@@ -45,19 +45,7 @@ def test_model():
     
     print('Number of trainable parameters in the model: %s' % str(count_params(model)))        
     model.to(cfg['device'])
-    # test = torch.randn(6,1,5,256,256).to(cfg['device'])
-    # test2 = torch.randn(6,1,5,256,64).to(cfg['device'])
-
-    # macs, params = profile(model, inputs =(test2,test,test2,))
-
-    # flops = FlopCountAnalysis(model, (test2,test,test2))
-    # flops = str(flops.total()/1e9)
-    # print('---------model---------')
-    # print('mac are (G):', macs/1e9)
-    # print('flops are (G):', flops)
-    # print('params are: ', params)
-    # del test, test2, flops, params
-    model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(model_path,map_location=cfg['device']))
     
 
     tester = Tester(cfg)
