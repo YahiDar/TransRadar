@@ -50,7 +50,15 @@ conda activate TransRadar
 pip install -e .
 ```
 
+Due to certain discrepancies with scikit library, you might need to do:
+
+```bash
+pip install scikit-image
+pip install scikit-learn
+```
+
 NOTE: We also provided `requirements.txt` file for venv enthusiasts.
+
 
 ## Running the code:
 
