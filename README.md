@@ -29,6 +29,8 @@ conda activate TransRadar
 pip install -e .
 ```
 
+NOTE: We also provided `requirements.txt` file for venv enthusiasts.
+
 ## Running the code:
 
 You must specify the path at which you store the logs and load the data from, this is done through:
@@ -53,7 +55,7 @@ You will find trained model, and associated pre-trained weights, in the ```./mvr
 
 ```bash
 $ cd ./mvrss/ 
-$ python -u test.py --cfg -dir_to_output-/carrada/TransRadar/TransRadar_0/config.json
+$ python -u test.py --cfg -dir_to_output-/carrada/TransRadar/TransRadar_1/config.json
 ```
 
 You can also use the ```test_transrad.sh``` file after editing directories.

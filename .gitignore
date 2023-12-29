@@ -19,3 +19,5 @@ config_files/config.ini
 
 /home/yahia/main_repos/TransRadar-Hold-/mvrss.egg-info
 /home/yahia/main_repos/TransRadar-Hold-/mvrss/out_logs
+/home/yahia/main_repos/TransRadar-Hold-/mvrss/carrada_logs/range_angle
+/home/yahia/main_repos/TransRadar-Hold-/mvrss/carrada_logs/range_doppler

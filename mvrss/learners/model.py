@@ -322,7 +322,8 @@ class Model(nn.Module):
                                             val_metrics['range_angle']['miou']))
                 
                 print('best val miou',best_val_miou)
-
+                
+                #original code used val_prec, i am using miou since we switched the loss to miou based loss. 
                 if val_metrics['range_doppler']['miou'] > (best_val_miou):
                     best_val_miou = val_metrics['range_doppler']['miou']
                     print('This epoch has higher validation score ... testing ')
