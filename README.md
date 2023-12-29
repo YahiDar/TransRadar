@@ -87,6 +87,10 @@ $ python -u test.py --cfg $ROOT/TransRadar/mvrss/carrada_logs/carrada/TransRadar
 
 You can also use the ```test_transrad.sh``` file after editing directories.
 
+Important note:
+
+The weights we provide are slightly different than what we report in the paper, since we trained and reported the outcome of multiple training attempts for fairness.
+
 ## Acknowledgements
 
 We mention again that this code heavily borrows from the [veloai repository](https://github.com/valeoai/MVRSS). 
