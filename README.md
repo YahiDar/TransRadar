@@ -1,3 +1,15 @@
+# TransRadar
+### **TransRadar: Adaptive-Directional Transformer for Real-Time Multi-View Radar Semantic Segmentation**
+
+![](https://i.imgur.com/waxVImv.png)
+[Yahia Dalbah](https://scholar.google.com/citations?user=58vfzfUAAAAJ&hl=en), [Jean Lahoud](https://scholar.google.com/citations?user=LsivLPoAAAAJ&hl=en&oi=ao), [Hisham Cholakkal](https://scholar.google.com/citations?user=bZ3YBRcAAAAJ&hl=en)
+
+Mohamed Bin Zayed University of Artificial Intelligence (MBZUAI)
+
+**TransRadar has been accepted at WACV2024**
+
+[Paper](https://openaccess.thecvf.com/content/WACV2024/papers/Dalbah_TransRadar_Adaptive-Directional_Transformer_for_Real-Time_Multi-View_Radar_Semantic_Segmentation_WACV_2024_paper.pdf)
+
 If you find this work helpful in your research, please do cite our work through:
 
 ```
@@ -10,25 +22,6 @@ If you find this work helpful in your research, please do cite our work through:
     pages     = {353-362}
 }
 ```
-
-and the original work from Ouaknine, A. through:
-```
-@InProceedings{Ouaknine_2021_ICCV,
-	       author = {Ouaknine, Arthur and Newson, Alasdair and P\'erez, Patrick and Tupin, Florence and Rebut, Julien},
-	       title = {Multi-View Radar Semantic Segmentation},
-	       booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
-	       month = {October},
-	       year = {2021},
-	       pages = {15671-15680}
-	       }
-```
-This repository heavily borrows from [Multi-View Radar Semantic Segmentation](https://github.com/valeoai/MVRSS)
-
-The CARRADA dataset is available on Valeo.ai's github: [https://github.com/valeoai/carrada_dataset](https://github.com/valeoai/carrada_dataset).
-
-
-Also feel free to check our work on the RODNet datast at our other repository through: [https://github.com/yahidar/radarformer](https://github.com/yahidar/radarformer)
-
 
 
 ## Installation
@@ -55,8 +48,11 @@ pip install scikit-image
 pip install scikit-learn
 ```
 
-NOTE: We also provided `requirements.txt` file for venv enthusiasts.
+NOTE: We also provide `requirements.txt` file for venv enthusiasts.
 
+2. Dataset:
+
+The CARRADA dataset is available on Valeo.ai's github: [https://github.com/valeoai/carrada_dataset](https://github.com/valeoai/carrada_dataset).
 
 ## Running the code:
 
@@ -93,10 +89,13 @@ The weights we provide are slightly different than what we report in the paper, 
 
 ## Acknowledgements
 
-We mention again that this code heavily borrows from the [Valeoai repository](https://github.com/valeoai/MVRSS). 
+This repository heavily borrows from [Multi-View Radar Semantic Segmentation](https://github.com/valeoai/MVRSS)
 
 The loss function implementation borrows from the [Unified Focal Loss code](https://github.com/mlyg/unified-focal-loss).
 
-The ADA code is heavily borrowed from the [Axial Attention](https://github.com/lucidrains/axial-attention) code and edited for our purpose.
+The ADA code is adapted from [Axial Attention](https://github.com/lucidrains/axial-attention).
+
+
+Also feel free to check our work on the RODNet dataset at our other repository through: [https://github.com/yahidar/radarformer](https://github.com/yahidar/radarformer)
 
 
